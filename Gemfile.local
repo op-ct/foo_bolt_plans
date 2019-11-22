@@ -1,0 +1,7 @@
+# This fragile garbage tries to only load bolt when puppet_version supports it
+if puppet_version =~ /^(>|~>|>=|=)?\s*(6|7|8)(\.|\s*\Z)/
+  gem 'bolt', ENV.fetch('BOLT_VERSION', '~> 1.30')
+end
+
+#:set filetype=ruby ts=2 sw=2 et
+
