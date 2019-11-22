@@ -1,5 +1,5 @@
-# The $nodes parameter is a list of nodes to retrieve the facts for.
-plan foo::do_the_things(TargetSpec $nodes) {
-  $result_set = run_command('foo', $nodes)
+# The $nodes parameter is a list of nodes
+plan foo::do_the_things(TargetSpec $targets) {
+  $result_set = run_command('foo', $targets)
   return $result_set
 }

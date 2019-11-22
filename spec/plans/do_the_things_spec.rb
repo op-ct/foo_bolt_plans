@@ -7,11 +7,13 @@ describe 'foo::do_the_things' do
     puts '', '=' * 80, "modulepath:\n#{modulepath}", '=' * 80, ''
     puts '', '=' * 80, "config.modulepath:\n#{config.modulepath}", '=' * 80, ''
     puts '', "==== modulepath == config.modulepath: '#{modulepath == config.modulepath}'", ''
-    modulepath.each do |path|
-      file = File.join(path, 'foo', 'do_the_things.pp')
-      puts "!!!! Found #{file}\n!!!! modulepath: #{modulepath}" if File.exist?(file)
-    end
-    allow_task('my_task').always_return('result_key' => 10)
-    expect(run_plan('foo::do_the_things', 'nodes' => [])).to be_ok
+    expect(run_plan('foo::do_the_things', 'targets' => [])).to be_ok
+  end
+
+  it 'runs successfully with some targets' do
+    allow_command('foo').always_return(stdout: 'foo has been done!')
+    result = run_plan('foo::do_the_things', 'targets' => ['node1', 'node2'])
+    expect(result).to be_ok
+    expect(result.value.class).to eq(Bolt::ResultSet)
   end
 end
